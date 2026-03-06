@@ -21,7 +21,9 @@ if(isset($_SESSION['mess'])){
 <?php require_once("_nav.php"); ?>
     <main>
 <h1 class="message"><?=$mess;?></h1>
+<?php if(isLevel(5)):?>
 <a href="add_drink.php" class="addDrink">Add new drink!</a>
+<?php endif; ?>
 <?php
     $sql="SELECT * FROM tbl_drinks ORDER BY rating DESC";
     $result=mysqli_query($conn, $sql);
@@ -35,8 +37,19 @@ if(isset($_SESSION['mess'])){
             <h2><?=$row['drinkname']?>&nbsp;&nbsp;<span><?=isAlcoholic(intval($row['alcoholic']))?></span></h2>
             <h4><?=$row['description']?></h4></div> 
             <div class="filler"></div>  
-            <div>Rated: <?=showRating($row['rating'])?>
-        </div>   
+            
+            <div class="ratingdiv">
+                Rated: <?=showRating($row['rating'])?>
+            <div class="yourRating">
+                <a href="rate.php?rating=5&drinkID=<?=$row['id']?>" class="olive">🫒</a>
+                <a href="rate.php?rating=4&drinkID=<?=$row['id']?>" class="olive">🫒</a>
+                <a href="rate.php?rating=3&drinkID=<?=$row['id']?>" class="olive">🫒</a>
+                <a href="rate.php?rating=2&drinkID=<?=$row['id']?>" class="olive">🫒</a>
+                <a href="rate.php?rating=1&drinkID=<?=$row['id']?>" class="olive">🫒</a>
+                Your Rating:
+            </div>
+        </div>
+
     </summary>
     <div class="ingredients">
         <pre><?=$row['ingredients']?></pre>
