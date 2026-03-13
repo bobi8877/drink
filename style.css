@@ -6,6 +6,7 @@
     --clr_back_nav:#343434;
     --clr_back_footer:var(--clr_back_nav);
     --header_font:"Oswald", sans-serif;
+    --main_bg:#00000022;
 }
 
 *, *:before, *:after{
@@ -18,6 +19,9 @@ body{
     display:flex;
     flex-direction: column;
     font-family: system-ui, sans-serif;
+}
+main{
+    background: var(--main_bg);
 }
 header{
     background: var(--clr_back_header);
