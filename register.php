@@ -8,10 +8,10 @@ if(isset($_POST['btn_reg'])){
     $username=$_POST['username'];
     $realname=$_POST['realname'];
     $mail=$_POST['mail'];
-    $password=$_POST['password'];
+    $password=md5($_POST['password']);
     $sql="INSERT INTO tbl_user(username, password, realname, mail) VALUES ('$username', '$password', '$realname', '$mail')";
     $result=mysqli_query($conn, $sql);
-    header("Location: register.php?reg=VXd1a21pZWdra3RvdGd4d2phbWd3");
+    header("Location: register.php?reg=QWdtIGR2ZG8geXpzbWEgcmpjcnE/IE1wdCBkcW8gbHR4dGogaHN2eCB1dGVnIGFrIGxieGRuIGVzbGF4bmcsIEVTTEFYTkcuIE93IHd6cHlpYWZ6IHRkbyB2c2h4eiB1c2Z3IGFnIGJ3dyBkYXkgMjY=");
 }
 ?>
 <html lang="en">
@@ -23,8 +23,11 @@ if(isset($_POST['btn_reg'])){
 </head>
 <body>
     <?php if(isset($_GET['reg'])): ?>
+        <div class="regdone">           
             <h1>Thank you for registering a user!</h1>
-            <p>The admin have to approve the user befor you can login. A mail will be sent to th registred email when approved.</p>
+            <p>The admin hase to approve the user befor you can login. A mail will be sent to the registred email when approved.</p>
+            <a href="index.php">Return to home</a>
+        </div>
     <?php else: ?>    
     <form action="register.php" method="POST">
         <label for="username">Username</label>

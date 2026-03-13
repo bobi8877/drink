@@ -65,4 +65,18 @@ function isSelected($val){
     }
 }
 
+function oliveColor($rating,$drinkid){
+    if(isset($_SESSION['id'])){
+        $retStr = "";
+        for($i=5;$i>0;$i--){
+            if($i > $rating){
+                $retStr .= "<a href='rating.php?rating=".$i."&drinkID=".$drinkid."'><span class='olive grey'>🫒</span></a>" ;
+            }else{
+                $retStr .= "<a href='rating.php?rating=".$i."&drinkID=".$drinkid."'><span class='olive'>🫒</span></a>";
+            }
+        }
+        return $retStr;
+    }
+}
+
 ?>

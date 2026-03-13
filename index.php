@@ -22,13 +22,20 @@ if(isset($_SESSION['mess'])){
     <main>
 <h1 class="message"><?=$mess;?></h1>
 <?php if(isLevel(5)):?>
-<a href="add_drink.php" class="addDrink">Add new drink!</a>
 <?php endif; ?>
 <?php
-    $sql="SELECT * FROM tbl_drinks ORDER BY rating DESC";
-    $result=mysqli_query($conn, $sql);
-
-
+$userID = isset($_SESSION['id']) ? intval($_SESSION['id']) : 0;
+$sql = "
+    SELECT
+        d.*,
+        COALESCE(AVG(r.rating), 0) AS avg_rating,
+        MAX(CASE WHEN r.user_id = $userID THEN r.rating ELSE 0 END) AS user_rating
+    FROM tbl_drinks d
+    LEFT JOIN tbl_rating r ON d.id = r.drink_id
+    GROUP BY d.id
+    ORDER BY avg_rating DESC, d.drinkname ASC
+";
+$result = mysqli_query($conn, $sql);
 ?>
 <?php while($row=mysqli_fetch_assoc($result)):?>
 <details>
@@ -39,15 +46,18 @@ if(isset($_SESSION['mess'])){
             <div class="filler"></div>  
             
             <div class="ratingdiv">
-                Rated: <?=showRating($row['rating'])?>
+                Rated: <?=showRating($row['avg_rating'])?>
+            <?php if(isLevel(10)): ?>
+            <?php $userRating = isset($row['user_rating']) ? intval($row['user_rating']) : 0; ?>
             <div class="yourRating">
-                <a href="rate.php?rating=5&drinkID=<?=$row['id']?>" class="olive">🫒</a>
-                <a href="rate.php?rating=4&drinkID=<?=$row['id']?>" class="olive">🫒</a>
-                <a href="rate.php?rating=3&drinkID=<?=$row['id']?>" class="olive">🫒</a>
-                <a href="rate.php?rating=2&drinkID=<?=$row['id']?>" class="olive">🫒</a>
-                <a href="rate.php?rating=1&drinkID=<?=$row['id']?>" class="olive">🫒</a>
-                Your Rating:
+                <?php for($i = 5; $i >= 1; $i--): ?>
+                    <a href="rate.php?rating=<?=$i?>&drinkID=<?=$row['id']?>"
+                    class="olive <?= ($userRating >= $i) ? 'selected' : 'grey' ?>"
+                    title="Rate <?=$i?>">🫒</a>
+                <?php endfor; ?>
+                <span class="yrlabel">Your rating:</span>
             </div>
+            <?php endif; ?>
         </div>
 
     </summary>

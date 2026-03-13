@@ -27,7 +27,7 @@ if(isset($_SESSION['mess'])){
                     Welcome to our cocktail community — a place dedicated to the art 
                     of alcoholic drinks. From timeless classics to modern creations, 
                     this website is built for cocktail enthusiasts who enjoy mixing, 
-                    tasting, and sharing their favorite beverages.
+                    tasting, and sharing their favorite beverages. <br>You can find interesting thing and can also share your tips for Cocktails & Spirit Selections, Just go to the register page and register!
                 </p>
                 <p>
                     While our main focus is alcoholic cocktails, we also feature a 
