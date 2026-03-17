@@ -13,13 +13,12 @@ if(isset($_GET['del'])){
 
 if(isset($_POST['btn_edit'])){
     $id=intval($_POST['id']);
-    $rating=floatval($_POST['rating']);
     $drink=htmlentities($_POST['drinkname']);
     $desc=htmlentities($_POST['desc']);
     $alc=intval($_POST['alcoholic']);
     $ingr=htmlentities($_POST['ingredients']);
     $rec=htmlentities($_POST['recipe']);
-    $sql="UPDATE tbl_drinks SET id='$id',drinkname='$drink',description='$desc',ingredients='$ingr',recipe='$rec',alcoholic=$alc,rating=$rating WHERE id=$id";
+    $sql="UPDATE tbl_drinks SET id='$id',drinkname='$drink',description='$desc',ingredients='$ingr',recipe='$rec',alcoholic=$alc WHERE id=$id";
     $result=mysqli_query($conn, $sql);
     header("Location: drinkadmin.php");
 }
@@ -53,8 +52,6 @@ if(isset($_POST['btn_edit'])){
             <input type="text" name="drinkname" id="drinkname" value="<?=$row['drinkname']?>">
             <label for="desc">Description:</label>
             <input type="text" name="desc" id="desc" value="<?=$row['description']?>">
-            <label for="rating">Rating</label>
-            <input type="number" name="rating" id="rating" inputmode="decimal" value="<?=$row['rating']?>">
             <label for="alcoholic">Is there alcohol in the drink?</label>
             <select name="alcoholic">
                 <option value="0" <?php if($row['alcoholic']==0){echo "selected";}?>>Not alcoholic</option>
@@ -68,7 +65,7 @@ if(isset($_POST['btn_edit'])){
         </form>
         <?php else: ?>
         <?php
-            $sql="SELECT * FROM tbl_drinks ORDER BY rating DESC";
+            $sql="SELECT * FROM tbl_drinks ORDER BY id DESC";
             $result=mysqli_query($conn, $sql);
         ?>
  
@@ -79,7 +76,7 @@ if(isset($_POST['btn_edit'])){
                         <h2><?=$row['drinkname']?>&nbsp;&nbsp;<span><?=isAlcoholic(intval($row['alcoholic']))?></span></h2>
                         <h4><?=$row['description']?></h4></div> 
                         <div class="filler"></div>  
-                        <div>Rated: <?=showRating($row['rating'])?> &nbsp;&nbsp; <a href="drinkadmin.php?edit=<?=$row['id']?>">Edit</a>  &nbsp;&nbsp; <a href="drinkadmin.php?del=<?=$row['id']?>">Exterminate</a>
+                        <div> <a href="drinkadmin.php?edit=<?=$row['id']?>">Edit</a>  &nbsp;&nbsp; <a href="drinkadmin.php?del=<?=$row['id']?>">Exterminate</a>
                     </div>   
                 </summary>
                 <div class="ingredients">

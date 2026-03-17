@@ -25,7 +25,7 @@ if(isset($_POST['btn_reg'])){
     <?php if(isset($_GET['reg'])): ?>
         <div class="regdone">           
             <h1>Thank you for registering a user!</h1>
-            <p>The admin hase to approve the user befor you can login. A mail will be sent to the registred email when approved.</p>
+            <p>The admin has to approve the user befor you can login. A mail will be sent to the registred email when approved.</p>
             <a href="index.php">Return to home</a>
         </div>
     <?php else: ?>    
